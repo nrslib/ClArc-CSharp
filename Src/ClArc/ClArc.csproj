@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>nrs</Authors>
+    <Product />
+    <Company>nrslib</Company>
+    <Description>Clean Architecture Library.
+You register usecase to UseCaseBus.
+And use usecase from UseCaseBus.
+</Description>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/nrslib/ClArc-CSharp/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nrslib/ClArc-CSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>CleanArchitecture, C#</PackageTags>
+    <PackageReleaseNotes>Release.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
