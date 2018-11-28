@@ -10,26 +10,32 @@ namespace ClArc.Tests
     public class AsyncUseCaseBusTest
     {
         [TestInitialize]
-        public void TestInitialize() {
+        public void TestInitialize()
+        {
         }
 
         [TestMethod]
-        public void TestThrowsException() {
+        public void TestThrowsException()
+        {
             var serviceCollection = new ServiceCollection();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
             busBuilder.RegisterUseCase<Request, ThrowsExceptionInteractor>();
             var bus = busBuilder.Build();
             var request = new Request();
-            try {
+            try
+            {
                 bus.Handle(request);
                 Assert.Fail();
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 // ignored
             }
         }
 
         [TestMethod]
-        public void TestNormal() {
+        public void TestNormal()
+        {
             var request = new Request();
             var serviceCollection = new ServiceCollection();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
@@ -39,7 +45,8 @@ namespace ClArc.Tests
         }
 
         [TestMethod]
-        public void TestDefinedInterface() {
+        public void TestDefinedInterface()
+        {
             var serviceCollection = new ServiceCollection();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
             busBuilder.RegisterUseCase<Request, DefinedInterfaceInteractor>();

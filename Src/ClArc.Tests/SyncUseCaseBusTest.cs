@@ -26,7 +26,8 @@ namespace ClArc.Tests
             {
                 var response = bus.Handle(request);
                 Assert.Fail();
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 // ignored
             }

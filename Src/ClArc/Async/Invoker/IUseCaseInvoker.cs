@@ -1,7 +1,9 @@
-﻿namespace ClArc.Async.Invoker
+﻿using ClArc.Async.Core;
+
+namespace ClArc.Async.Invoker
 {
     public interface IUseCaseInvoker
     {
-        void Invoke(object request);
+        void Invoke(IRequest request);
     }
 }

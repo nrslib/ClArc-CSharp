@@ -4,6 +4,6 @@ namespace ClArc.Sync.Invoker
 {
     public interface IUseCaseInvoker
     {
-        TResponse Invoke<TResponse>(object request) where TResponse : IResponse;
+        TResponse Invoke<TResponse>(IRequest<TResponse> request) where TResponse : IResponse;
     }
 }

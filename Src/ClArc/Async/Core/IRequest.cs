@@ -1,6 +1,6 @@
 ﻿namespace ClArc.Async.Core
 {
-    public interface IRequest 
+    public interface IRequest
     {
     }
 }
