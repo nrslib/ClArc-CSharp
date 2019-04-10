@@ -31,7 +31,7 @@ namespace ClArc.Builder
             where TRequest : IRequest<IResponse>
             where TImplement : class, IUseCase<TRequest, IResponse>
         {
-            services.AddSingleton<TImplement>();
+            services.AddTransient<TImplement>();
             bus.Register<TRequest, TImplement>();
         }
     }
