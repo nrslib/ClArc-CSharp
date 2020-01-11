@@ -18,15 +18,15 @@ namespace ClArc.Sync.Invoker
             handleMethod = implementsType.GetMethod("Handle");
         }
 
-        public TResponse Invoke<TResponse>(IRequest<TResponse> request)
-            where TResponse : IResponse
+        public TResponse Invoke<TResponse>(IInputData<TResponse> inputData)
+            where TResponse : IOutputData
         {
             var instance = provider.GetService(usecaseType);
 
             object responseObject;
             try
             {
-                responseObject = handleMethod.Invoke(instance, new object[] {request});
+                responseObject = handleMethod.Invoke(instance, new object[] {inputData});
             }
             catch (TargetInvocationException e)
             {

@@ -18,13 +18,13 @@ namespace ClArc.Async.Invoker
             handleMethod = implementsType.GetMethod("Handle");
         }
 
-        public void Invoke(IRequest request)
+        public void Invoke(IInputData inputData)
         {
             var instance = provider.GetService(usecaseType);
 
             try
             {
-                handleMethod.Invoke(instance, new object[] {request});
+                handleMethod.Invoke(instance, new object[] {inputData});
             }
             catch (TargetInvocationException e)
             {

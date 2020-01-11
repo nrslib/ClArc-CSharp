@@ -28,8 +28,8 @@ namespace ClArc.Builder
         }
 
         public void RegisterUseCase<TRequest, TImplement>()
-            where TRequest : IRequest
-            where TImplement : class, IUseCase<TRequest>
+            where TRequest : IInputData
+            where TImplement : class, IInputPort<TRequest>
         {
             services.AddTransient<TImplement>();
             bus.Register<TRequest, TImplement>();

@@ -2,14 +2,14 @@
 
 namespace ClArc.Tests.Async
 {
-    public class DefinedInterfaceInteractor : IDefinedInterfaceUseCase
+    public class DefinedInterfaceInteractor : IDefinedInterfaceInputPort
     {
-        public void Handle(Request request)
+        public void Handle(InputData inputData)
         {
         }
     }
 
-    public interface IDefinedInterfaceUseCase : IUseCase<Request>
+    public interface IDefinedInterfaceInputPort : IInputPort<InputData>
     {
     }
 }

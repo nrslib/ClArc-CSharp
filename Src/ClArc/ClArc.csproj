@@ -15,6 +15,10 @@ And use usecase from UseCaseBus.
     <RepositoryType>git</RepositoryType>
     <PackageTags>CleanArchitecture, C#</PackageTags>
     <PackageReleaseNotes>Release.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

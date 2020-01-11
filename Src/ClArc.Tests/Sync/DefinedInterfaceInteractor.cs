@@ -2,15 +2,15 @@
 
 namespace ClArc.Tests.Sync
 {
-    public class DefinedInterfaceInteractor : IDefinedInterfaceUseCase
+    public class DefinedInterfaceInteractor : IDefinedInterfaceInputPort
     {
-        public Response Handle(Request request)
+        public OutputData Handle(InputData inputData)
         {
-            return new Response();
+            return new OutputData();
         }
     }
 
-    public interface IDefinedInterfaceUseCase : IUseCase<Request, Response>
+    public interface IDefinedInterfaceInputPort : IInputPort<InputData, OutputData>
     {
     }
 }

@@ -2,9 +2,9 @@
 
 namespace ClArc.Tests.Async
 {
-    public class NormalInteractor : IUseCase<Request>
+    public class NormalInteractor : IInputPort<InputData>
     {
-        public void Handle(Request request)
+        public void Handle(InputData inputData)
         {
         }
     }

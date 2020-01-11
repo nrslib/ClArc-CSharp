@@ -2,7 +2,7 @@
 
 namespace ClArc.Tests.Sync
 {
-    public class Response : IResponse
+    public class InputData : IInputData<OutputData>
     {
     }
 }

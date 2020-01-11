@@ -3,9 +3,9 @@ using ClArc.Sync.Core;
 
 namespace ClArc.Tests.Sync
 {
-    public class ThrowsExceptionInteractor : IUseCase<Request, Response>
+    public class ThrowsExceptionInteractor : IInputPort<InputData, OutputData>
     {
-        public Response Handle(Request request)
+        public OutputData Handle(InputData inputData)
         {
             throw new Exception();
         }

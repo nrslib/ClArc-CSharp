@@ -2,11 +2,11 @@
 
 namespace ClArc.Tests.Sync
 {
-    public class NormalInteractor : IUseCase<Request, Response>
+    public class NormalInteractor : IInputPort<InputData, OutputData>
     {
-        public Response Handle(Request request)
+        public OutputData Handle(InputData inputData)
         {
-            return new Response();
+            return new OutputData();
         }
     }
 }

@@ -4,6 +4,6 @@ namespace ClArc.Async.Invoker
 {
     public interface IUseCaseInvoker
     {
-        void Invoke(IRequest request);
+        void Invoke(IInputData inputData);
     }
 }

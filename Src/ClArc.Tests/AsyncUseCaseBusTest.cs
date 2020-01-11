@@ -19,9 +19,9 @@ namespace ClArc.Tests
         {
             var serviceCollection = new ServiceCollection();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
-            busBuilder.RegisterUseCase<Request, ThrowsExceptionInteractor>();
+            busBuilder.RegisterUseCase<InputData, ThrowsExceptionInteractor>();
             var bus = busBuilder.Build();
-            var request = new Request();
+            var request = new InputData();
             try
             {
                 bus.Handle(request);
@@ -36,10 +36,10 @@ namespace ClArc.Tests
         [TestMethod]
         public void TestNormal()
         {
-            var request = new Request();
+            var request = new InputData();
             var serviceCollection = new ServiceCollection();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
-            busBuilder.RegisterUseCase<Request, NormalInteractor>();
+            busBuilder.RegisterUseCase<InputData, NormalInteractor>();
             var bus = busBuilder.Build();
             bus.Handle(request);
         }
@@ -49,9 +49,9 @@ namespace ClArc.Tests
         {
             var serviceCollection = new ServiceCollection();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
-            busBuilder.RegisterUseCase<Request, DefinedInterfaceInteractor>();
+            busBuilder.RegisterUseCase<InputData, DefinedInterfaceInteractor>();
             var bus = busBuilder.Build();
-            var request = new Request();
+            var request = new InputData();
             bus.Handle(request);
         }
     }

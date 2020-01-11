@@ -2,7 +2,7 @@
 
 namespace ClArc.Tests.Async
 {
-    public class Request : IRequest
+    public class InputData : IInputData
     {
     }
 }

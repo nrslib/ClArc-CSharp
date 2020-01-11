@@ -3,9 +3,9 @@ using ClArc.Async.Core;
 
 namespace ClArc.Tests.Async
 {
-    public class ThrowsExceptionInteractor : IUseCase<Request>
+    public class ThrowsExceptionInteractor : IInputPort<InputData>
     {
-        public void Handle(Request request)
+        public void Handle(InputData inputData)
         {
             throw new Exception();
         }

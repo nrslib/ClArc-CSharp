@@ -19,18 +19,18 @@ namespace ClArc.Sync
         {
         }
 
-        public TResponse Handle<TResponse>(IRequest<TResponse> request)
-            where TResponse : IResponse
+        public TResponse Handle<TResponse>(IInputData<TResponse> inputData)
+            where TResponse : IOutputData
         {
-            var invoker = Invoker(request);
-            return invoker.Invoke(request);
+            var invoker = Invoker(inputData);
+            return invoker.Invoke(inputData);
         }
 
-        public async Task<TResponse> HandleAync<TResponse>(IRequest<TResponse> request)
-            where TResponse : IResponse
+        public async Task<TResponse> HandleAync<TResponse>(IInputData<TResponse> inputData)
+            where TResponse : IOutputData
         {
-            var invoker = Invoker(request);
-            var result = await Task.Run(() => invoker.Invoke(request));
+            var invoker = Invoker(inputData);
+            var result = await Task.Run(() => invoker.Invoke(inputData));
             return result;
         }
 
@@ -41,19 +41,19 @@ namespace ClArc.Sync
         }
 
         internal void Register<TRequest, TUseCase>()
-            where TRequest : IRequest<IResponse>
-            where TUseCase : IUseCase<TRequest, IResponse>
+            where TRequest : IInputData<IOutputData>
+            where TUseCase : IInputPort<TRequest, IOutputData>
         {
             handlerTypes.Add(typeof(TRequest), typeof(TUseCase));
         }
 
-        private IUseCaseInvoker Invoker<TResponse>(IRequest<TResponse> request)
-            where TResponse : IResponse
+        private IUseCaseInvoker Invoker<TResponse>(IInputData<TResponse> inputData)
+            where TResponse : IOutputData
         {
-            var requestType = request.GetType();
+            var requestType = inputData.GetType();
             if (invokers.TryGetValue(requestType, out var searchedInvoker)) return searchedInvoker;
 
-            if (!handlerTypes.TryGetValue(requestType, out var handlerType)) throw new Exception($"No registered any usecase for this request(RequestType : {request.GetType().Name}");
+            if (!handlerTypes.TryGetValue(requestType, out var handlerType)) throw new Exception($"No registered any usecase for this inputData(RequestType : {inputData.GetType().Name}");
 
             var invoker = invokers.GetOrAdd(requestType, _ =>
             {

@@ -27,30 +27,30 @@ namespace ClArc.Async
         }
 
         public void Register<TRequest, TUseCase>()
-            where TRequest : IRequest
-            where TUseCase : IUseCase<TRequest>
+            where TRequest : IInputData
+            where TUseCase : IInputPort<TRequest>
         {
             handlerTypes.Add(typeof(TRequest), typeof(TUseCase));
         }
 
-        public void Handle(IRequest request)
+        public void Handle(IInputData inputData)
         {
-            var invoker = Invoker(request);
-            invoker.Invoke(request);
+            var invoker = Invoker(inputData);
+            invoker.Invoke(inputData);
         }
 
-        public async Task HandleAync(IRequest request)
+        public async Task HandleAync(IInputData inputData)
         {
-            var invoker = Invoker(request);
-            await Task.Run(() => invoker.Invoke(request));
+            var invoker = Invoker(inputData);
+            await Task.Run(() => invoker.Invoke(inputData));
         }
 
-        private IUseCaseInvoker Invoker(IRequest request)
+        private IUseCaseInvoker Invoker(IInputData inputData)
         {
-            var requestType = request.GetType();
+            var requestType = inputData.GetType();
             if (invokers.TryGetValue(requestType, out var searchedInvoker)) return searchedInvoker;
 
-            if (!handlerTypes.TryGetValue(requestType, out var handlerType)) throw new Exception($"No registered any usecase for this request(RequestType : {request.GetType().Name}");
+            if (!handlerTypes.TryGetValue(requestType, out var handlerType)) throw new Exception($"No registered any usecase for this inputData(RequestType : {inputData.GetType().Name}");
 
             var invoker = invokers.GetOrAdd(requestType, _ =>
             {
