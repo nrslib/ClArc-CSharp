@@ -14,11 +14,11 @@ And use usecase from UseCaseBus.
     <RepositoryUrl>https://github.com/nrslib/ClArc-CSharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>CleanArchitecture, C#</PackageTags>
-    <PackageReleaseNotes>Release.</PackageReleaseNotes>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>free from IServiceCollection</PackageReleaseNotes>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,16 +1,16 @@
 ﻿using ClArc.Async;
 using ClArc.Async.Core;
 using ClArc.Async.Invoker;
-using Microsoft.Extensions.DependencyInjection;
+using ClArc.Dependency;
 
 namespace ClArc.Builder
 {
     public class AsyncUseCaseBusBuilder
     {
         private readonly UseCaseBus bus = new UseCaseBus();
-        private readonly IServiceCollection services;
+        private readonly IServiceRegistration services;
 
-        public AsyncUseCaseBusBuilder(IServiceCollection services)
+        public AsyncUseCaseBusBuilder(IServiceRegistration services)
         {
             this.services = services;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using ClArc.Builder;
 using ClArc.Tests.Async;
+using ClArc.Tests.Module;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -17,8 +18,8 @@ namespace ClArc.Tests
         [TestMethod]
         public void TestThrowsException()
         {
-            var serviceCollection = new ServiceCollection();
-            var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
+            var serviceRegistration = new TestServiceRegistration();
+            var busBuilder = new AsyncUseCaseBusBuilder(serviceRegistration);
             busBuilder.RegisterUseCase<InputData, ThrowsExceptionInteractor>();
             var bus = busBuilder.Build();
             var request = new InputData();
@@ -37,8 +38,8 @@ namespace ClArc.Tests
         public void TestNormal()
         {
             var request = new InputData();
-            var serviceCollection = new ServiceCollection();
-            var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
+            var serviceRegistration = new TestServiceRegistration();
+            var busBuilder = new AsyncUseCaseBusBuilder(serviceRegistration);
             busBuilder.RegisterUseCase<InputData, NormalInteractor>();
             var bus = busBuilder.Build();
             bus.Handle(request);
@@ -48,8 +49,8 @@ namespace ClArc.Tests
         public void TestDefinedInterface()
         {
             var serviceCollection = new ServiceCollection();
-            var busBuilder = new AsyncUseCaseBusBuilder(serviceCollection);
-            busBuilder.RegisterUseCase<InputData, DefinedInterfaceInteractor>();
+            var serviceRegistration = new TestServiceRegistration();
+            var busBuilder = new AsyncUseCaseBusBuilder(serviceRegistration);
             var bus = busBuilder.Build();
             var request = new InputData();
             bus.Handle(request);
