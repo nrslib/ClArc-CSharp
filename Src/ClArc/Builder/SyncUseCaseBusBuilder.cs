@@ -34,5 +34,12 @@ namespace ClArc.Builder
             services.AddTransient<TImplement>();
             bus.Register<TRequest, TImplement>();
         }
+        public void RegisterUseCaseAsync<TRequest, TImplement>()
+    where TRequest : IInputData<IOutputData>
+    where TImplement : class, IInputPortAsync<TRequest, IOutputData>
+        {
+            services.AddTransient<TImplement>();
+            bus.RegisterAsync<TRequest, TImplement>();
+        }
     }
 }

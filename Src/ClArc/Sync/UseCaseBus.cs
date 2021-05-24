@@ -46,6 +46,12 @@ namespace ClArc.Sync
         {
             handlerTypes.Add(typeof(TRequest), typeof(TUseCase));
         }
+        internal void RegisterAsync<TRequest, TUseCase>()
+    where TRequest : IInputData<IOutputData>
+    where TUseCase : IInputPortAsync<TRequest, IOutputData>
+        {
+            handlerTypes.Add(typeof(TRequest), typeof(TUseCase));
+        }
 
         private IUseCaseInvoker Invoker<TResponse>(IInputData<TResponse> inputData)
             where TResponse : IOutputData

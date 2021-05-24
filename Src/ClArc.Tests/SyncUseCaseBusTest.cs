@@ -32,7 +32,16 @@ namespace ClArc.Tests
                 // ignored
             }
         }
-
+        [TestMethod]
+        public async void TestAsync()
+        {
+            var serviceRegistration = new TestServiceRegistration();
+            var busBuilder = new SyncUseCaseBusBuilder(serviceRegistration);
+            busBuilder.RegisterUseCaseAsync<InputData, AsyncInteractor>();
+            var bus = busBuilder.Build();
+            var request = new InputData();
+            var response = await bus.HandleAync(request);
+        }
         [TestMethod]
         public void TestNormal()
         {
