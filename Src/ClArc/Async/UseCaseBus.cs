@@ -10,8 +10,8 @@ namespace ClArc.Async
     public class UseCaseBus
     {
         private readonly Dictionary<Type, Type> handlerTypes = new Dictionary<Type, Type>();
-        private readonly ConcurrentDictionary<Type, IUseCaseInvoker> invokers = new ConcurrentDictionary<Type, IUseCaseInvoker>();
-        private IUseCaseInvokerFactory invokerFactory;
+        private readonly ConcurrentDictionary<Type, IUseCaseInvokerAsync> invokers = new ConcurrentDictionary<Type, IUseCaseInvokerAsync>();
+        private IUseCaseInvokerFactoryAsync invokerFactory;
 
         private IServiceProvider provider;
 
@@ -20,32 +20,33 @@ namespace ClArc.Async
         {
         }
 
-        public void Setup(IServiceProvider provider, IUseCaseInvokerFactory invokerFactory)
+        public void Setup(IServiceProvider provider, IUseCaseInvokerFactoryAsync invokerFactory)
         {
             this.provider = provider;
             this.invokerFactory = invokerFactory;
         }
 
-        public void Register<TRequest, TUseCase>()
-            where TRequest : IInputData
-            where TUseCase : IInputPort<TRequest>
+        internal void Register<TRequest, TUseCase>()
+            where TRequest : IInputData<IOutputDataAsync>
+            where TUseCase : IInputPort<TRequest, IOutputDataAsync>
         {
             handlerTypes.Add(typeof(TRequest), typeof(TUseCase));
         }
 
-        public void Handle(IInputData inputData)
+        public Task<TResponse> Handle<TResponse>(IInputData<TResponse> inputData) where TResponse : IOutputDataAsync
         {
             var invoker = Invoker(inputData);
-            invoker.Invoke(inputData);
+            return invoker.Invoke(inputData);
         }
 
-        public async Task HandleAync(IInputData inputData)
+        public async Task<TResponse> HandleAync<TResponse>(IInputData<TResponse> inputData) where TResponse : IOutputDataAsync
         {
             var invoker = Invoker(inputData);
-            await Task.Run(() => invoker.Invoke(inputData));
+            return await Task.Run(() => invoker.Invoke(inputData));
         }
 
-        private IUseCaseInvoker Invoker(IInputData inputData)
+        private IUseCaseInvokerAsync Invoker<TResponse>(IInputData<TResponse> inputData)
+            where TResponse : IOutputDataAsync
         {
             var requestType = inputData.GetType();
             if (invokers.TryGetValue(requestType, out var searchedInvoker)) return searchedInvoker;

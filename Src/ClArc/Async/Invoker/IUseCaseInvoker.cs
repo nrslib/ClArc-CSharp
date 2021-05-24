@@ -1,9 +1,10 @@
 ﻿using ClArc.Async.Core;
+using System.Threading.Tasks;
 
 namespace ClArc.Async.Invoker
 {
-    public interface IUseCaseInvoker
+    public interface IUseCaseInvokerAsync
     {
-        void Invoke(IInputData inputData);
+        Task<TResponse> Invoke<TResponse>(IInputData<TResponse> inputData) where TResponse : IOutputDataAsync;
     }
 }

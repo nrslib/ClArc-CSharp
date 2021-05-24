@@ -2,7 +2,7 @@
 
 namespace ClArc.Tests.Async
 {
-    public class InputData : IInputData
+    public class InputData : IInputData<OutputData>
     {
     }
 }

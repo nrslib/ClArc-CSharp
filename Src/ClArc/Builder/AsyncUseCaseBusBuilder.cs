@@ -18,7 +18,7 @@ namespace ClArc.Builder
         /// <summary>
         /// For change invoker
         /// </summary>
-        public IUseCaseInvokerFactory UseCaseInvokerFactory { get; set; } = new UseCaseInvokerDefaultFactory();
+        public IUseCaseInvokerFactoryAsync UseCaseInvokerFactory { get; set; } = new UseCaseInvokerDefaultFactoryAsync();
 
         public UseCaseBus Build()
         {
@@ -28,8 +28,8 @@ namespace ClArc.Builder
         }
 
         public void RegisterUseCase<TRequest, TImplement>()
-            where TRequest : IInputData
-            where TImplement : class, IInputPort<TRequest>
+            where TRequest : IInputData<IOutputDataAsync>
+            where TImplement : class, IInputPort<TRequest, IOutputDataAsync>
         {
             services.AddTransient<TImplement>();
             bus.Register<TRequest, TImplement>();

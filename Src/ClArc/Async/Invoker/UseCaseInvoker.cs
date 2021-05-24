@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using ClArc.Async.Core;
 
 namespace ClArc.Async.Invoker
 {
-    internal class UseCaseInvoker : IUseCaseInvoker
+    internal class UseCaseInvoker : IUseCaseInvokerAsync
     {
         private readonly MethodInfo handleMethod;
         private readonly IServiceProvider provider;
@@ -18,18 +19,37 @@ namespace ClArc.Async.Invoker
             handleMethod = implementsType.GetMethod("Handle");
         }
 
-        public void Invoke(IInputData inputData)
+        public async Task<TResponse> Invoke<TResponse>(IInputData<TResponse> inputData) where TResponse : IOutputDataAsync
         {
             var instance = provider.GetService(usecaseType);
 
+            Task<TResponse> responseObject;
             try
             {
-                handleMethod.Invoke(instance, new object[] {inputData});
+                responseObject = (Task<TResponse>)handleMethod.Invoke(instance, new object[] { inputData });
             }
             catch (TargetInvocationException e)
             {
                 throw e.InnerException;
             }
+
+            return await responseObject;
         }
+
+
+        //public Task<TResponse> async Invoke<TResponse>(IInputData<TResponse> inputData)
+        //    where TResponse : IOutputDataAsync
+        //{
+        //    var instance = provider.GetService(usecaseType);
+
+        //    try
+        //    {
+        //        handleMethod.Invoke(instance, new object[] {inputData});
+        //    }
+        //    catch (TargetInvocationException e)
+        //    {
+        //        throw e.InnerException;
+        //    }
+        //}
     }
 }

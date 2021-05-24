@@ -2,9 +2,9 @@
 
 namespace ClArc.Async.Invoker
 {
-    public class UseCaseInvokerDefaultFactory : IUseCaseInvokerFactory
+    public class UseCaseInvokerDefaultFactoryAsync :     IUseCaseInvokerFactoryAsync
     {
-        public IUseCaseInvoker Generate(Type usecaseType, Type implementsType, IServiceProvider provider)
+        public IUseCaseInvokerAsync Generate(Type usecaseType, Type implementsType, IServiceProvider provider)
         {
             return new UseCaseInvoker(usecaseType, implementsType, provider);
         }

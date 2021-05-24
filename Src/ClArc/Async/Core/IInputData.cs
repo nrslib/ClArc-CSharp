@@ -1,6 +1,6 @@
 ﻿namespace ClArc.Async.Core
 {
-    public interface IInputData
+    public interface IInputData<out TOutputDataAsync> where TOutputDataAsync : IOutputDataAsync
     {
     }
 }
