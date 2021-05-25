@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClArc.Sync.Core
+namespace ClArc.Core
 {
     public interface IInputPortAsync<in TInputData, out TOutputData, out TOutputDataTask>
         where TOutputData : IOutputData

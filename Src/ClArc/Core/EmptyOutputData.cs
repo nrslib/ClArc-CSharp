@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClArc.Sync.Core
+namespace ClArc.Core
 {
-    public interface IInputDataVoidOutput
+    public class EmptyOutputData : IOutputData
     {
     }
 }

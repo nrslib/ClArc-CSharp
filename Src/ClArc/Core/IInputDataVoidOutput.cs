@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClArc.Async.Core
+namespace ClArc.Core
 {
-    public interface IOutputDataAsync
+    public interface IInputDataVoidOutput
     {
     }
 }

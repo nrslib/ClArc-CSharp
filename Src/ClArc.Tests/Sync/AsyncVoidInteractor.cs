@@ -1,4 +1,4 @@
-﻿using ClArc.Sync.Core;
+﻿using ClArc.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;

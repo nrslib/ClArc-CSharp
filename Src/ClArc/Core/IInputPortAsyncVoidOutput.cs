@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClArc.Sync.Core
+namespace ClArc.Core
 {
     public interface IInputPortAsyncVoidOutput<in TInputDataVoidOutput>
         where TInputDataVoidOutput : IInputDataVoidOutput
