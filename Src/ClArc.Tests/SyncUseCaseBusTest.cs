@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ClArc.Builder;
 using ClArc.Tests.Module;
 using ClArc.Tests.Sync;
@@ -18,7 +19,7 @@ namespace ClArc.Tests
         public void TestThrowsException()
         {
             var serviceRegistration = new TestServiceRegistration();
-            var busBuilder = new SyncUseCaseBusBuilder(serviceRegistration);
+            var busBuilder = new UseCaseBusBuilder(serviceRegistration);
             busBuilder.RegisterUseCase<InputData, ThrowsExceptionInteractor>();
             var bus = busBuilder.Build();
             var request = new InputData();
@@ -32,12 +33,32 @@ namespace ClArc.Tests
                 // ignored
             }
         }
+        [TestMethod]
+        public async Task TestAsync()
+        {
+            var serviceRegistration = new TestServiceRegistration();
+            var busBuilder = new UseCaseBusBuilder(serviceRegistration);
+            busBuilder.RegisterUseCaseAsync<InputData, AsyncInteractor, OutputData>();
+            var bus = busBuilder.Build();
+            var request = new InputData();
+            var response = await bus.HandleAync(request);
+        }
 
+        [TestMethod]
+        public async Task TestAsyncVoid()
+        {
+            var serviceRegistration = new TestServiceRegistration();
+            var busBuilder = new UseCaseBusBuilder(serviceRegistration);
+            busBuilder.RegisterUseCaseAsyncVoidOutput<InputDataVoidOutput, AsyncVoidInteractor>();
+            var bus = busBuilder.Build();
+            var request = new InputDataVoidOutput();
+            await bus.HandleAyncVoidOutput(request);
+        }
         [TestMethod]
         public void TestNormal()
         {
             var serviceRegistration = new TestServiceRegistration();
-            var busBuilder = new SyncUseCaseBusBuilder(serviceRegistration);
+            var busBuilder = new UseCaseBusBuilder(serviceRegistration);
             busBuilder.RegisterUseCase<InputData, NormalInteractor>();
             var bus = busBuilder.Build();
             var request = new InputData();
@@ -45,10 +66,21 @@ namespace ClArc.Tests
         }
 
         [TestMethod]
+        public void TestSyncVoid()
+        {
+            var serviceRegistration = new TestServiceRegistration();
+            var busBuilder = new UseCaseBusBuilder(serviceRegistration);
+            busBuilder.RegisterUseCaseVoidOutput<InputDataVoidOutput, VoidInteractor>();
+            var bus = busBuilder.Build();
+            var request = new InputDataVoidOutput();
+            bus.HandleVoidOutput(request);
+        }
+
+        [TestMethod]
         public void TestDefinedInterface()
         {
             var serviceRegistration = new TestServiceRegistration();
-            var busBuilder = new SyncUseCaseBusBuilder(serviceRegistration);
+            var busBuilder = new UseCaseBusBuilder(serviceRegistration);
             busBuilder.RegisterUseCase<InputData, DefinedInterfaceInteractor>();
             var bus = busBuilder.Build();
             var request = new InputData();

@@ -1,4 +1,4 @@
-﻿using ClArc.Sync.Core;
+﻿using ClArc.Core;
 
 namespace ClArc.Tests.Sync
 {
