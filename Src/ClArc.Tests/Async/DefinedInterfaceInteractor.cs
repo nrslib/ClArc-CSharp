@@ -11,7 +11,7 @@ namespace ClArc.Tests.Async
         }
     }
 
-    public interface IDefinedInterfaceInputPort : IInputPort<InputData, OutputData>
+    public interface IDefinedInterfaceInputPort : IInputPort<InputData, OutputData, Task<OutputData>>
     {
     }
 }

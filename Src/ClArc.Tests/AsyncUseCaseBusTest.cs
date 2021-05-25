@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ClArc.Builder;
 using ClArc.Tests.Async;
 using ClArc.Tests.Module;
@@ -16,16 +17,16 @@ namespace ClArc.Tests
         }
 
         [TestMethod]
-        public void TestThrowsException()
+        public async Task TestThrowsException()
         {
             var serviceRegistration = new TestServiceRegistration();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceRegistration);
-            busBuilder.RegisterUseCase<InputData, ThrowsExceptionInteractor>();
+            busBuilder.RegisterUseCase<InputData, ThrowsExceptionInteractor, OutputData>();
             var bus = busBuilder.Build();
             var request = new InputData();
             try
             {
-                bus.Handle(request);
+                var result = await bus.Handle(request);
                 Assert.Fail();
             }
             catch (Exception)
@@ -35,25 +36,25 @@ namespace ClArc.Tests
         }
 
         [TestMethod]
-        public void TestNormal()
+        public async Task TestNormal()
         {
             var request = new InputData();
             var serviceRegistration = new TestServiceRegistration();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceRegistration);
-            busBuilder.RegisterUseCase<InputData, NormalInteractor>();
+            busBuilder.RegisterUseCase<InputData, NormalInteractor, OutputData>();
             var bus = busBuilder.Build();
-            bus.Handle(request);
+            var response = await bus.Handle(request);
         }
 
         [TestMethod]
-        public void TestDefinedInterface()
+        public async Task TestDefinedInterface()
         {
             var serviceCollection = new ServiceCollection();
             var serviceRegistration = new TestServiceRegistration();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceRegistration);
             var bus = busBuilder.Build();
             var request = new InputData();
-            bus.Handle(request);
+            var response = await bus.Handle(request);
         }
     }
 }

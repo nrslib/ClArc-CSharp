@@ -26,9 +26,10 @@ namespace ClArc.Async
             this.invokerFactory = invokerFactory;
         }
 
-        internal void Register<TRequest, TUseCase>()
-            where TRequest : IInputData<IOutputDataAsync>
-            where TUseCase : IInputPort<TRequest, IOutputDataAsync>
+        internal void Register<TRequest, TUseCase, TOutputData>()
+            where TOutputData : IOutputDataAsync
+            where TRequest : IInputData<TOutputData>
+            where TUseCase : IInputPort<TRequest, TOutputData, Task<TOutputData>>
         {
             handlerTypes.Add(typeof(TRequest), typeof(TUseCase));
         }

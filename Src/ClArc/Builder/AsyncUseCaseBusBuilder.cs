@@ -2,6 +2,7 @@
 using ClArc.Async.Core;
 using ClArc.Async.Invoker;
 using ClArc.Dependency;
+using System.Threading.Tasks;
 
 namespace ClArc.Builder
 {
@@ -27,12 +28,13 @@ namespace ClArc.Builder
             return bus;
         }
 
-        public void RegisterUseCase<TRequest, TImplement>()
-            where TRequest : IInputData<IOutputDataAsync>
-            where TImplement : class, IInputPort<TRequest, IOutputDataAsync>
+        public void RegisterUseCase<TRequest, TImplement, TOutputData>()
+            where TOutputData : IOutputDataAsync
+            where TRequest : IInputData<TOutputData>
+            where TImplement : class, IInputPort<TRequest, TOutputData, Task<TOutputData>>
         {
             services.AddTransient<TImplement>();
-            bus.Register<TRequest, TImplement>();
+            bus.Register<TRequest, TImplement, TOutputData>();
         }
     }
 }

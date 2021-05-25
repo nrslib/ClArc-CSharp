@@ -10,7 +10,7 @@ namespace ClArc.Tests.Sync
     {
         public async Task<IOutputData> HandleAsync(InputData request)
         {
-            return await Task.FromResult(new OutputData());
+            return (IOutputData) await Task.FromResult(new OutputData());
         }
     }
 }

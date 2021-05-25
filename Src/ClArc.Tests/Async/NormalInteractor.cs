@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace ClArc.Tests.Async
 {
-    public class NormalInteractor : IInputPort<InputData,OutputData>
+    public class NormalInteractor : IInputPort<InputData,OutputData,Task<OutputData>>
     {
         public async Task<OutputData> Handle(InputData inputData)
         {
-            return null;
+            return await Task.FromResult(new OutputData());
         }
     }
 }

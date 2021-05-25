@@ -30,7 +30,7 @@ namespace ClArc.Sync
             where TResponse : IOutputData
         {
             var invoker = Invoker(inputData);
-            var result = await Task.Run(() => invoker.Invoke(inputData));
+            var result = await invoker.InvokeAsync(inputData);
             return result;
         }
 
@@ -55,6 +55,22 @@ namespace ClArc.Sync
 
         private IUseCaseInvoker Invoker<TResponse>(IInputData<TResponse> inputData)
             where TResponse : IOutputData
+        {
+            var requestType = inputData.GetType();
+            if (invokers.TryGetValue(requestType, out var searchedInvoker)) return searchedInvoker;
+
+            if (!handlerTypes.TryGetValue(requestType, out var handlerType)) throw new Exception($"No registered any usecase for this inputData(RequestType : {inputData.GetType().Name}");
+
+            var invoker = invokers.GetOrAdd(requestType, _ =>
+            {
+                var handlerInstance = provider.GetService(handlerType);
+                return invokerFactory.Generate(handlerType, handlerInstance.GetType(), provider);
+            });
+
+            return invoker;
+        }
+        private IUseCaseInvoker InvokerAsync<TResponse>(IInputData<TResponse> inputData)
+    where TResponse : IOutputData
         {
             var requestType = inputData.GetType();
             if (invokers.TryGetValue(requestType, out var searchedInvoker)) return searchedInvoker;

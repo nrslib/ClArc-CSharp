@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ClArc.Builder;
 using ClArc.Tests.Module;
 using ClArc.Tests.Sync;
@@ -33,7 +34,7 @@ namespace ClArc.Tests
             }
         }
         [TestMethod]
-        public async void TestAsync()
+        public async Task TestAsync()
         {
             var serviceRegistration = new TestServiceRegistration();
             var busBuilder = new SyncUseCaseBusBuilder(serviceRegistration);

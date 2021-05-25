@@ -4,10 +4,11 @@ using ClArc.Async.Core;
 
 namespace ClArc.Tests.Async
 {
-    public class ThrowsExceptionInteractor : IInputPort<InputData, OutputData>
+    public class ThrowsExceptionInteractor : IInputPort<InputData, OutputData, Task<OutputData>>
     {
 
-        Task<OutputData> IInputPort<InputData, OutputData>.Handle(InputData request)
+
+        public  Task<OutputData> Handle(InputData request)
         {
             throw new NotImplementedException();
         }

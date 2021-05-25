@@ -6,10 +6,11 @@ namespace ClArc.Async.Core
     /// Interface for business logic.
     /// </summary>
     /// <typeparam name="TInputData"></typeparam>
-    public interface IInputPort<in TInputData, out TOutputDataAsync>
-        where TInputData : IInputData<TOutputDataAsync>
-        where TOutputDataAsync : IOutputDataAsync
+    public interface IInputPort<in TInputData, out TOutputData, out TOutputDataAsync>
+        where TInputData : IInputData<TOutputData>
+        where TOutputData : IOutputDataAsync
+        where TOutputDataAsync : Task<TOutputData>
     {
-        Task<IOutputDataAsync> Handle(TInputData request);
+        TOutputDataAsync Handle(TInputData request);
     }
 }
