@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ClArc.Sync.Core
 {
-    public interface IInputPortAsync<in TInputData, out TOutputData>
-        where TInputData : IInputData<TOutputData>
+    public interface IInputPortAsync<in TInputData, out TOutputData, out TOutputDataTask>
         where TOutputData : IOutputData
+        where TInputData : IInputData<TOutputData>
+        where TOutputDataTask : Task<TOutputData>
     {
-        Task<IOutputData> HandleAsync(TInputData request);
+        TOutputDataTask Handle(TInputData request);
     }
 }

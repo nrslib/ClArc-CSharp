@@ -2,6 +2,7 @@
 using ClArc.Sync;
 using ClArc.Sync.Core;
 using ClArc.Sync.Invoker;
+using System.Threading.Tasks;
 
 namespace ClArc.Builder
 {
@@ -34,12 +35,29 @@ namespace ClArc.Builder
             services.AddTransient<TImplement>();
             bus.Register<TRequest, TImplement>();
         }
-        public void RegisterUseCaseAsync<TRequest, TImplement>()
-    where TRequest : IInputData<IOutputData>
-    where TImplement : class, IInputPortAsync<TRequest, IOutputData>
+
+        public void RegisterUseCaseVoidOutput<TRequest, TImplement>()
+    where TRequest : IInputDataVoidOutput
+    where TImplement : class, IInputPortVoidOutput<TRequest>
         {
             services.AddTransient<TImplement>();
-            bus.RegisterAsync<TRequest, TImplement>();
+            bus.RegisterVoidOutput<TRequest, TImplement>();
+        }
+
+        public void RegisterUseCaseAsync<TRequest, TImplement, TOutputData>()
+            where TOutputData : IOutputData
+    where TRequest : IInputData<TOutputData>
+    where TImplement : class, IInputPortAsync<TRequest, TOutputData, Task<TOutputData>>
+        {
+            services.AddTransient<TImplement>();
+            bus.RegisterAsync<TRequest, TImplement, TOutputData>();
+        }
+        public void RegisterUseCaseAsyncVoidOutput<TRequest, TImplement>()
+where TRequest : IInputDataVoidOutput
+where TImplement : class, IInputPortAsyncVoidOutput<TRequest>
+        {
+            services.AddTransient<TImplement>();
+            bus.RegisterAsyncVoidOutput<TRequest, TImplement>();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ClArc.Tests.Async
     {
         public async Task<OutputData> Handle(InputData inputData)
         {
-            return new OutputData();
+            return await Task.FromResult(new OutputData());
         }
     }
 

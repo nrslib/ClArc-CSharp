@@ -52,6 +52,8 @@ namespace ClArc.Tests
             var serviceCollection = new ServiceCollection();
             var serviceRegistration = new TestServiceRegistration();
             var busBuilder = new AsyncUseCaseBusBuilder(serviceRegistration);
+            busBuilder.RegisterUseCase<InputData, DefinedInterfaceInteractor, OutputData>();
+
             var bus = busBuilder.Build();
             var request = new InputData();
             var response = await bus.Handle(request);

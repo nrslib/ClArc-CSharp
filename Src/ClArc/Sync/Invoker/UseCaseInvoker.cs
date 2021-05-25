@@ -8,7 +8,6 @@ namespace ClArc.Sync.Invoker
     internal class UseCaseInvoker : IUseCaseInvoker
     {
         private readonly MethodInfo handleMethod; 
-        private readonly MethodInfo handleMethodAsync;
         private readonly IServiceProvider provider;
         private readonly Type usecaseType;
 
@@ -18,7 +17,6 @@ namespace ClArc.Sync.Invoker
             this.provider = provider;
 
             handleMethod = implementsType.GetMethod("Handle");
-            handleMethodAsync = implementsType.GetMethod("HandleAsync");
         }
 
         public TResponse Invoke<TResponse>(IInputData<TResponse> inputData)
@@ -48,7 +46,7 @@ namespace ClArc.Sync.Invoker
             Task<TResponse> responseObject;
             try
             {
-                responseObject = (Task<TResponse>)handleMethodAsync.Invoke(instance, new object[] { inputData });
+                responseObject = (Task<TResponse>)handleMethod.Invoke(instance, new object[] { inputData });
             }
             catch (TargetInvocationException e)
             {
@@ -56,6 +54,39 @@ namespace ClArc.Sync.Invoker
             }
 
             return await responseObject;
+        }
+
+        public async Task InvokeAsyncVoidOutput(IInputDataVoidOutput inputData)
+        {
+            var instance = provider.GetService(usecaseType);
+
+            Task responseObject;
+            try
+            {
+                responseObject = (Task)handleMethod.Invoke(instance, new object[] { inputData });
+            }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
+            }
+            await responseObject;
+            return;
+        }
+
+        public void InvokeVoidOutput(IInputDataVoidOutput inputData)
+        {
+            var instance = provider.GetService(usecaseType);
+
+            try
+            {
+                handleMethod.Invoke(instance, new object[] { inputData });
+            }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
+            }
+
+            return;
         }
     }
 }

@@ -6,11 +6,11 @@ using ClArc.Sync.Core;
 
 namespace ClArc.Tests.Sync
 {
-    class AsyncInteractor : IInputPortAsync<InputData, OutputData>
+    class AsyncInteractor : IInputPortAsync<InputData, OutputData, Task<OutputData>>
     {
-        public async Task<IOutputData> HandleAsync(InputData request)
+        public async Task<OutputData> Handle(InputData request)
         {
-            return (IOutputData) await Task.FromResult(new OutputData());
+            return await Task.FromResult(new OutputData());
         }
     }
 }
